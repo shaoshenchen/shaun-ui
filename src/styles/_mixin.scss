@@ -1,0 +1,96 @@
+@mixin button-size($padding-y, $padding-x, $font-size, $border-raduis) {
+  padding      : $padding-y $padding-x;
+  font-size    : $font-size;
+  border-radius: $border-raduis;
+}
+
+@mixin button-style($color,
+  $background-color,
+  $border,
+  $type: 'default',
+) {
+  color           : $color;
+  background-color: $background-color;
+  border          : $border;
+
+  // btn-primary
+  @if $type=='primary' {
+    color           : $white;
+    background-color: $blue;
+    border          : 1px solid transparent;
+    transition      : background-color .3s;
+
+    &:hover {
+      color           : $white;
+      background-color: lighten($blue, 7.5%);
+    }
+  }
+
+  @if $type=='dashed' {
+    &:hover {
+      color       : $blue;
+      border-color: $blue;
+    }
+  }
+
+  // btn-text
+  @if $type=='text' {
+    &:hover {
+      color       : $gray-7;
+      border-color: transparent;
+    }
+  }
+
+  // btn-link
+  @if $type=='link' {
+    &:hover {
+      color          : lighten($color, 20%);
+      text-decoration: none;
+      border         : $border-link;
+    }
+  }
+
+  &:disabled:hover {
+    color       : $color;
+    border-color: $border-color;
+  }
+
+  &.disabled:hover {
+    color : $color;
+    border: $border-link;
+  }
+}
+
+@mixin alert-color($background-color, $border-color) {
+  background-color: $background-color;
+  border          : 1px solid $border-color;
+}
+
+@mixin zoom-animation($direction: 'top',
+  $scaleStart: scaleY(0),
+  $scaleEnd: scaleY(1),
+  $origin: center top,
+) {
+  .zoom-in-#{$direction}-enter {
+    opacity  : 0;
+    transform: $scaleStart;
+  }
+
+  .zoom-in-#{$direction}-enter-active {
+    opacity         : 1;
+    transform       : $scaleEnd;
+    transform-origin: $origin;
+    transition      : transform 300ms cubic-bezier(0.23, 1, 0.32, 1) 100ms, opacity 300ms cubic-bezier(0.23, 1, 0.32, 1) 100ms;
+  }
+
+  .zoom-in-#{$direction}-exit {
+    opacity: 1;
+  }
+
+  .zoom-in-#{$direction}-exit-active {
+    opacity         : 0;
+    transform       : $scaleStart;
+    transform-origin: $origin;
+    transition      : transform 300ms cubic-bezier(0.23, 1, 0.32, 1) 100ms, opacity 300ms cubic-bezier(0.23, 1, 0.32, 1) 100ms;
+  }
+}
