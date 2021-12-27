@@ -1,9 +1,12 @@
 import React from 'react';
-import './App.css';
+import Input from './components/Input'
 
 function App() {
   return (
     <div className="App">
+      <Input />
+      <Input size='small' />
+      <Input size='large' />
     </div>
   );
 }
