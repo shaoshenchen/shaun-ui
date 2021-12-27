@@ -1,0 +1,97 @@
+.upload {
+  width: 300px;
+
+  .upload-list {
+    list-style-type: none;
+    padding-left   : 0;
+
+    .upload-list-item {
+      overflow      : hidden;
+      display       : flex;
+      flex-direction: column;
+      padding       : .2em .4em;
+
+      // 上传列表上半部分
+      .item-description {
+        display        : flex;
+        justify-content: space-between;
+        position       : relative;
+
+        .file-name {
+          width      : 100%;
+          text-align : left;
+          margin-left: .5em;
+        }
+
+        .file-status {
+          transition: opacity .4s;
+        }
+
+        .file-actions {
+          position  : absolute;
+          right     : -2px;
+          top       : -30px;
+          width     : 20px;
+          transition: top .4s;
+        }
+      }
+
+      // 上传列表下半部分
+      .item-progress {
+
+        .progress-bar-outer {
+          border       : 1px solid $gray-3;
+          border-radius: 4px;
+
+          .progress-bar-inner {
+            border-radius: 4px;
+          }
+
+          .color-blue {
+            background-color: $blue;
+            color: $white;
+          }
+        }
+      }
+    }
+
+    .upload-list-item:hover {
+      background-color: $gray-1;
+      border-radius   : 4px;
+
+      .file-status {
+        opacity: 0;
+      }
+
+      .file-actions {
+        top: 0px;
+      }
+    }
+  }
+
+  // 拖拽框
+  .upload-drag {
+    // 被放到拖拽框上
+    &.drag-over {
+      background-color: lighten($blue, 40);
+    }
+    
+    .drag-box {
+      border: 3px dashed $gray-2;
+      border-radius: 4px;
+
+      .drag-icon {
+        color: $blue;
+        font-size: 100px;
+      }
+
+      .drag-text {
+        font-weight: bold;
+      }
+    }
+
+    .drag-box:hover {
+      border-color: $blue;
+    }
+  }
+}
