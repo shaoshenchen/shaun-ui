@@ -9,22 +9,22 @@ import Transition from '../Transition/transition'
 
 library.add(fas)
 export interface SubMenuProps {
-  index?: string;
+  key?: string;
   title: string;
   className?: string;
 }
 
 const SubMenu: React.FC<SubMenuProps> = (props) => {
-  const { index, title, className, children } = props
+  const { key, title, className, children } = props
   const context = useContext(MenuContext)
   // 双下标处理
-  const contextIndex = context.index?.includes('-') ? context.index.split('-')[0] : context.index
-  const openSubMenu = context.defaultOpenSubMenu as Array<string>
-  const isOpened = (index && context.mode === 'vertical') ? openSubMenu.includes(index) : false
+  // const contextIndex = context.index?.includes('-') ? context.index.split('-')[0] : context.index
+  const openSubMenu = context.defaultOpenedSubMenu as Array<string>
+  const isOpened = (key && context.mode === 'vertical') ? openSubMenu.includes(key) : false
   const [subMenuOpen, setSubMenuOpen] = useState(isOpened)
   const classes = classNames('menu-item menu-submenu', className, {
     // context.index 可能有双下标，index 一定是单下标
-    'menu-active': contextIndex === index,
+    'menu-active': context.key === key,
     'menu-selected': subMenuOpen
   })
   const handleClick = (e: React.MouseEvent) => {
@@ -55,7 +55,7 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
       const childElement = child as FunctionComponentElement<MenuItemProps>
       if (childElement.type.displayName === 'MenuItem') {
         return React.cloneElement(childElement, {
-          index: `${index}-${idx}`
+          key: `${key}-${idx}`
         })
       } else {
         console.error('Warning: SubMenu has a child which is not a MenuItem component')
@@ -74,7 +74,7 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
     )
   }
   return (
-    <li key={index} className={classes} {...hoverEvents}>
+    <li key={key} className={classes} {...hoverEvents}>
       <div className='submenu-title' {...clickEvents}>
         {title}
         <Icon className='angle-down' icon='angle-down' />

@@ -4,13 +4,13 @@ import SubMenu, { SubMenuProps } from './subMenu'
 import MenuItem, { MenuItemProps } from './menuItem'
 
 export type IMenuComponent = React.FC<MenuProps> & {
-  SubMenu: React.FC<SubMenuProps>,
-  MenuItem: React.FC<MenuItemProps>,
+  Item: React.FC<MenuItemProps>,
+  Sub: React.FC<SubMenuProps>,
 }
 
 const TransMenu = Menu as IMenuComponent
 
-TransMenu.MenuItem = MenuItem
-TransMenu.SubMenu = SubMenu
+TransMenu.Item = MenuItem
+TransMenu.Sub = SubMenu
 
 export default TransMenu

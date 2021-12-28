@@ -6,59 +6,65 @@ import { MenuItemProps } from './menuItem'
 type MenuMode = 'horizontial' | 'vertical'
 type SelectCallback = (selectedIndex: string) => void
 
+// Menu 组件参数类型
 export interface MenuProps {
-  defaultIndex?: string;
+  defaultSelectedKey?: string;
   className?: string;
   mode?: MenuMode;
-  // style?: React.CSSProperties;
-  defaultOpenSubMenu?: string[];
+  defaultOpenedSubMenu?: string[];
   onSelect?: SelectCallback;
 }
 
 interface IMenuContext {
-  index?: string;
+  key?: string;
   mode?: MenuMode;
-  defaultOpenSubMenu?: string[];
+  defaultOpenedSubMenu?: string[];
   onSelect?: SelectCallback;
 }
 
-export const MenuContext = createContext<IMenuContext>({ index: '0' })
+export const MenuContext = createContext<IMenuContext>({})
 
 const Menu: React.FC<MenuProps> = (props) => {
   const {
-    defaultIndex,
+    defaultSelectedKey,
     className,
     mode,
-    defaultOpenSubMenu,
+    defaultOpenedSubMenu,
     onSelect,
     children,
   } = props
   // 管理 menu-item 的 menu-active 状态
-  const [menuItemActive, setMenuItemActive] = useState(defaultIndex)
+  const [menuItemActive, setMenuItemActive] = useState(defaultSelectedKey)
   const classes = classNames('menu', className, {
     'menu-vertical': mode === 'vertical',
   })
-  const handleClick = (index: string) => {    
-    setMenuItemActive(index)
+  const handleClick = (key: string) => {
+    setMenuItemActive(key)
     // 用户自定义回调
-    onSelect && onSelect(index)
+    onSelect && onSelect(key)
   }
   // 传递的 context
   const passedContext: IMenuContext = {
-    index: menuItemActive || '0',
+    key: menuItemActive,
     mode,
-    defaultOpenSubMenu,
+    defaultOpenedSubMenu,
     onSelect: handleClick,
   }
   // 将拿到的 children 重新渲染
   const renderChildren = () => {
     return React.Children.map(children, (item, idx) => {
+      // childElem - child 元素
       const childElem = item as React.FunctionComponentElement<MenuItemProps>
+      // type - child 组件内容
       const { displayName } = childElem.type
       if (displayName === 'MenuItem' || 'SubMenu') {
+        // 将新 props 和原元素浅层合并
         return React.cloneElement(childElem, {
-          index: idx.toString()
+          key: idx.toString()
         })
+        // return (
+        //   <childElem.type key={}></childElem.type>
+        // )
       } else {
         console.error('Warning: Menu has a child which is not a MenuItem component')
       }
@@ -75,9 +81,9 @@ const Menu: React.FC<MenuProps> = (props) => {
 }
 
 Menu.defaultProps = {
-  defaultIndex: '0',
+  // defaultSelectedKey: '1-0',
   mode: 'horizontial',
-  defaultOpenSubMenu: [],
+  defaultOpenedSubMenu: [],
 }
 
 export default Menu
