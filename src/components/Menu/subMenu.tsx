@@ -9,22 +9,22 @@ import Transition from '../Transition/transition'
 
 library.add(fas)
 export interface SubMenuProps {
-  key?: string;
+  keyy?: string;
   title: string;
   className?: string;
 }
 
 const SubMenu: React.FC<SubMenuProps> = (props) => {
-  const { key, title, className, children } = props
+  const { keyy, title, className, children } = props
   const context = useContext(MenuContext)
   // 双下标处理
   // const contextIndex = context.index?.includes('-') ? context.index.split('-')[0] : context.index
   const openSubMenu = context.defaultOpenedSubMenu as Array<string>
-  const isOpened = (key && context.mode === 'vertical') ? openSubMenu.includes(key) : false
+  const isOpened = (keyy && context.mode === 'vertical') ? openSubMenu.includes(keyy) : false
   const [subMenuOpen, setSubMenuOpen] = useState(isOpened)
   const classes = classNames('menu-item menu-submenu', className, {
     // context.index 可能有双下标，index 一定是单下标
-    'menu-active': context.key === key,
+    'menu-active': context.key === keyy,
     'menu-selected': subMenuOpen
   })
   const handleClick = (e: React.MouseEvent) => {
@@ -55,7 +55,7 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
       const childElement = child as FunctionComponentElement<MenuItemProps>
       if (childElement.type.displayName === 'MenuItem') {
         return React.cloneElement(childElement, {
-          key: `${key}-${idx}`
+          key: `${keyy}-${idx}`
         })
       } else {
         console.error('Warning: SubMenu has a child which is not a MenuItem component')
@@ -74,7 +74,7 @@ const SubMenu: React.FC<SubMenuProps> = (props) => {
     )
   }
   return (
-    <li key={key} className={classes} {...hoverEvents}>
+    <li key={keyy} className={classes} {...hoverEvents}>
       <div className='submenu-title' {...clickEvents}>
         {title}
         <Icon className='angle-down' icon='angle-down' />

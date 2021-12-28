@@ -3,7 +3,7 @@ import classNames from "classnames";
 import { MenuContext } from "./menu";
 
 export interface MenuItemProps extends React.HTMLAttributes<HTMLElement> {
-  key: string;
+  keyy: string;
   disabled?: boolean;
   className?: string;
   // style?: React.CSSProperties;
@@ -11,7 +11,7 @@ export interface MenuItemProps extends React.HTMLAttributes<HTMLElement> {
 
 const MenuItem: React.FC<MenuItemProps> = (props) => {
   const {
-    key,
+    keyy,
     disabled,
     className,
     children,
@@ -20,14 +20,14 @@ const MenuItem: React.FC<MenuItemProps> = (props) => {
   const context = useContext(MenuContext)
   const classes = classNames('menu-item', className, {
     'menu-disabled': disabled,
-    'menu-active': context.key === key
+    'menu-active': context.key === keyy
   })
   const handleClick = () => {
     // 给 li 设置 menu-active 类
-    if (context.onSelect && !disabled && (typeof key === 'string')) {
-      context.onSelect(key)
+    if (context.onSelect && !disabled && (typeof keyy === 'string')) {
+      context.onSelect(keyy)
     }
-    console.log(context.key, key);
+    console.log(context.key, keyy);
 
     // 给 menu-submenu 设置 menu-active 类
     // if ()
