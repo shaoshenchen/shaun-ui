@@ -1,13 +1,24 @@
 .progress-bar {
-  display: block;
+  display : block;
   // width: 100%;
 
   .progress-bar-outer {
     position: relative;
+    border  : 1px solid $gray-3;
 
     .progress-bar-inner {
-      position: absolute;
-      
+      color     : $white;
+      text-align: right;
+
+      @each $key, $val in $theme-color {
+        &.color-#{$key} {
+          background-color: $val;
+        }
+      }
+
+      .inner-text {
+        margin-right: .5em;
+      }
     }
   }
 }
