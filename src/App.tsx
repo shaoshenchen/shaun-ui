@@ -1,17 +1,21 @@
-import { useEffect, useState } from 'react';
-import Progress from './components/Progress'
+import { useState } from 'react';
+import Transition from './components/Transition'
+import Button from './components/Button'
 
 function App() {
-  let [count, setCount] = useState(0)
-  useEffect(() => {
-    setTimeout(() => {
-      setCount(count + 1)
-    }, 100)
-  }, [count])
+  const [trigger, setTrigger] = useState(false)
 
   return (
     <div className="App">
-      <Progress percent={count} showText={true} theme='red' />
+      <Button btnType='primary' onClick={() => setTrigger(!trigger)}>primary</Button>
+
+      <Transition
+        in={trigger}
+        timeout={300}
+        animation='zoom-in-bottom'
+      >
+        <h1>Hello</h1>
+      </Transition>
     </div>
   );
 }
